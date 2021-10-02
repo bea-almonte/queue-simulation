@@ -8,6 +8,9 @@ OBJECTS = customer.o queue.o heap.o
 final-simulation: final-simulation.o $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
+memory: 
+	valgrind ./final-simulation
+
 clean:
 	rm -rf *.dSYM
-	$(RM) *.o *.gc* simulation
+	$(RM) *.o *.gc* final-simulation
