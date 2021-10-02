@@ -7,19 +7,23 @@
 
 class Heap {
     private:
-        const int heapSize = 12;
+        int heapSize;
         float currentTime; // keep track of ticks
-        
     public:
+        Heap() {
+            heapSize = 11;
+            currentTime = 0;
+        };
         bool IsEmpty();
         Customer NextCustomer();
         void InsertCustomer(Customer newCustomer);
         void ConstructHeap(int initialSize);
-        void PercolateDown(Customer newCustomer);
-        void PercolateUp(Customer newCustomer);
-        void BuildHeap();
-        Customer events[13];
+        void PercolateDown(int i);
+        void PercolateUp(Customer newCustomer); // done
+        void BuildHeap(); // done
+        Customer events[15];
         float GetNextRandomInterval();
+        void DeleteMin();
 };
 
 

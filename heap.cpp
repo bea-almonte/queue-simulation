@@ -20,7 +20,7 @@ void Heap::PercolateUp(Customer newCustomer) {
     // place item at top of heap
     // move items down until place to insert is found
     events[0] = newCustomer;
-    int i = 11;
+    int i = ++heapSize;
     // while arrival time is less than the parent
     while (newCustomer.arrivalTime < events[i/2].arrivalTime) {
         // switch
@@ -32,19 +32,38 @@ void Heap::PercolateUp(Customer newCustomer) {
     events[i] = newCustomer;
 }
 
-void Heap::PercolateDown(Customer newCustomer) {
-    //int child;
-    int i;
-    //float temp = events[i].arrivalTime;
+// delete elements
+void Heap::DeleteMin() {
+    // replace top with last elemnt
+    events[1] = events[heapSize--];
+    PercolateDown(1);
+}
+
+void Heap::PercolateDown(int i) {
+    int child;
+    Customer temp = events[i];
 
     // while left child < size
-    while ((i*2) <= 12) {
-        i = i*2;
+    while ((i*2) <= heapSize) {
+        child = i*2;
+        // if child is not at the end and right child is less than left
+        if (child != heapSize && events[child+1].arrivalTime < events[child].arrivalTime) {
+            child++;
+        }
+        if (events[child].arrivalTime < temp.arrivalTime){
+            events[i] = events[child];
+        } else {
+            break;
+        }
+        i = child;
     }
+
+    events[i] = temp;
 }
 
 void Heap::BuildHeap() {
-    for (int i = 1; i < 11; i++) {
-        events[i].arrivalTime = i;
+    // 1- 10
+    for (int i = 1; i <= heapSize; i++) {
+        events[i].arrivalTime = i; // + GetNextRandomInterval();
     }
 }
