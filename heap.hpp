@@ -7,9 +7,9 @@
 
 class Heap {
     private:
-        const int heapSize = 5;
+        const int heapSize = 12;
         float currentTime; // keep track of ticks
-        Customer events[6];
+        
     public:
         bool IsEmpty();
         Customer NextCustomer();
@@ -18,6 +18,7 @@ class Heap {
         void PercolateDown(Customer newCustomer);
         void PercolateUp(Customer newCustomer);
         void BuildHeap();
+        Customer events[13];
         float GetNextRandomInterval();
 };
 

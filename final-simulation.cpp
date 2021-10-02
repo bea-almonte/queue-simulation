@@ -5,23 +5,16 @@
 #include "heap.hpp"
 
 int main() {
-    Customer heap[5];
+    Customer test;
     Heap customers;
     Queue line;
     srand(time(NULL));
 
-    for (int i = 0; i < 5; i++) {
-        heap[i].arrivalTime = i;
-        line.Enqueue(&heap[i]);
-    }
-
-    for (int i = 0; i < 5; i++) {
-        std::cout << line.Dequeue()->arrivalTime << std::endl;
-    }
-
-    for (int i = 0; i < 20; i++) {
-        std::cout << customers.GetNextRandomInterval() << " ";
-        
+    customers.BuildHeap();
+    test.arrivalTime = 2.5;
+    customers.PercolateUp(test);
+    for (int i = 1; i < 12; i++) {
+        std::cout << customers.events[i].arrivalTime << " ";
     }
     return 0;
 }
