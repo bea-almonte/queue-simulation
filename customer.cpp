@@ -13,3 +13,12 @@ Customer::Customer(float arrivalTime) {
     startOfServiceTime = 0;
     nextCust = nullptr;
 }
+
+float Customer::GetEventTime() {
+
+    if (departureTime == -1) {
+        return arrivalTime;
+    } else {
+        return departureTime;
+    }
+}

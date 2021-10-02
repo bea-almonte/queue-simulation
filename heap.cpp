@@ -28,9 +28,9 @@ void Heap::PercolateUp(Customer newCustomer) {
     events[0] = newCustomer;
 
     // increase heapsize and index at end of heap / new node
-    int i = ++heapSize;
+    int i = heapSize++;
     // while arrival time is less than the parent
-    while (newCustomer.arrivalTime < events[i/2].arrivalTime) {
+    while (newCustomer.GetEventTime() < events[i/2].GetEventTime()) {
         // switch
         events[i] = events[i/2];
 
@@ -55,10 +55,10 @@ void Heap::PercolateDown(int i) {
     while ((i*2) <= heapSize) {
         child = i*2;
         // if child is not at the end and right child is less than left
-        if (child != heapSize && events[child+1].arrivalTime < events[child].arrivalTime) {
+        if (child != heapSize && events[child+1].GetEventTime() < events[child].GetEventTime()) {
             child++;
         }
-        if (events[child].arrivalTime < temp.arrivalTime){
+        if (events[child].GetEventTime() < temp.GetEventTime()){
             events[i] = events[child];
         } else {
             break;
@@ -71,7 +71,7 @@ void Heap::PercolateDown(int i) {
 
 void Heap::ConstructHeap(int initialSize) {
     // 1- 10
-    heapSize = 12;
+    this->heapSize = initialSize+1;
     for (int i = 1; i <= heapSize; i++) {
         currentTime += GetNextRandomInterval(lambda);
         events[i].arrivalTime = currentTime;

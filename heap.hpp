@@ -8,7 +8,7 @@
 
 class Heap {
     private:
-        int heapSize;
+        
         float currentTime; // keep track of ticks
         int mu = 3;
         int lambda = 2;
@@ -21,9 +21,10 @@ class Heap {
         void PercolateDown(int i); // done
         void PercolateUp(Customer newCustomer); // done
         void BuildHeap();
-        Customer events[15];
+        Customer events[201];
         float GetNextRandomInterval(int avg);
         void DeleteMin();
+        int heapSize;
 };
 
 
