@@ -1,14 +1,20 @@
 #include "heap.hpp"
 
-float Heap::GetNextRandomInterval() {
+Heap::Heap() {
+    heapSize = 0;
+    currentTime = 0;
+}
+
+
+float Heap::GetNextRandomInterval(int avg) {
     //Generate a random float f on the interval (0..1]
     float randFloat;
     float intervalTime;
-
+ 
     randFloat = float(rand()) / (float(RAND_MAX) + 1.0);
     
     //Compute intervalTime as -1 * (1.0/avg) * ln(f) // natural logarithm of f
-    intervalTime = -1 * (1.0/2) * log(randFloat);
+    intervalTime = -1 * (1.0/lambda) * log(randFloat);
     return intervalTime;
 }
 /*
@@ -20,6 +26,8 @@ void Heap::PercolateUp(Customer newCustomer) {
     // place item at top of heap
     // move items down until place to insert is found
     events[0] = newCustomer;
+
+    // increase heapsize and index at end of heap / new node
     int i = ++heapSize;
     // while arrival time is less than the parent
     while (newCustomer.arrivalTime < events[i/2].arrivalTime) {
@@ -61,9 +69,11 @@ void Heap::PercolateDown(int i) {
     events[i] = temp;
 }
 
-void Heap::BuildHeap() {
+void Heap::ConstructHeap(int initialSize) {
     // 1- 10
+    heapSize = 12;
     for (int i = 1; i <= heapSize; i++) {
-        events[i].arrivalTime = i; // + GetNextRandomInterval();
+        currentTime += GetNextRandomInterval(lambda);
+        events[i].arrivalTime = currentTime;
     }
 }
