@@ -47,10 +47,11 @@ void Heap::PercolateUp(Customer newCustomer) {
 Customer Heap::DeleteMin() {
     // replace top with last elemnt
     events[0] = events[1];
-    events[1] = events[--heapSize];
+    events[1] = events[heapSize--];
     // set last node
-    events[heapSize+1] = Customer();
     PercolateDown(1);
+    events[heapSize+1] = Customer();
+    
 
     return events[0];
 }
@@ -82,7 +83,7 @@ void Heap::PercolateDown(int i) {
 
 void Heap::InsertCustomers() {
 
-    while (heapSize < 200 && totalEvents != 0) {
+    while (heapSize < 20 && totalEvents != 0) {
         totalEvents--;
         //currentTime += GetNextRandomInterval(lambda);
         events[heapSize].arrivalTime = currentTime;

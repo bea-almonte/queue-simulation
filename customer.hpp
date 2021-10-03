@@ -14,6 +14,7 @@ class Customer {
         float startOfServiceTime; // not equal to 
         //arrival time when clerks are taken
         float GetEventTime();
+        bool isDeparture;
 };
 
 #endif

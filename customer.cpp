@@ -2,16 +2,18 @@
 
 Customer::Customer() {
     arrivalTime = 0;
-    departureTime = -1;
+    departureTime = -1.0000;
     startOfServiceTime = 0;
     nextCust = nullptr;
+    isDeparture = false;
 }
 
 Customer::Customer(float arrivalTime) {
     this->arrivalTime = arrivalTime;
-    departureTime = -1;
+    departureTime = -1.0000;
     startOfServiceTime = 0;
     nextCust = nullptr;
+    isDeparture = false;
 }
 
 Customer& Customer::operator=(const Customer& newCustomer) {
@@ -20,6 +22,7 @@ Customer& Customer::operator=(const Customer& newCustomer) {
         this->departureTime = newCustomer.departureTime;
         this->startOfServiceTime = newCustomer.startOfServiceTime;
         this->nextCust = newCustomer.nextCust;
+        this->isDeparture = newCustomer.isDeparture;
     }
     return *this;
 }
