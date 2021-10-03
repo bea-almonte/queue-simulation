@@ -15,6 +15,7 @@ class Heap {
     public:
         Heap();
         bool IsEmpty();
+        int eventsCreated = 0;
         Customer* NextCustomer(); // done
         void InsertCustomers(); // done
         void ConstructHeap(int initialSize); // first arrivals

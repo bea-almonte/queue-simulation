@@ -1,11 +1,11 @@
 #include "eventsimulator.hpp"
 
 EventSimulator::EventSimulator() {
-    mu = 2;
-    lambda = 3;
+    mu = 3;
+    lambda = 2;
     totalEvents = 100;
-    totalServers = 4;
-    availableServers = 4;
+    totalServers = 2;
+    availableServers = totalServers;
     customerWaitedCnt = 0;
     totalWaitTime = 0;
     serviceTime = 0;
@@ -19,8 +19,8 @@ EventSimulator::EventSimulator(int mu, int lambda, int totalEvents, int totalSer
     this->mu = 2;
     this->lambda = 3;
     this->totalEvents = 5000;
-    this->totalServers = 4;
-    availableServers = 4;
+    this->totalServers = 2;
+    availableServers = totalServers;
     customerWaitedCnt = 0;
     totalWaitTime = 0;
     serviceTime = 0;
@@ -35,12 +35,13 @@ void EventSimulator::processEvents() {
     while (!PQ.IsEmpty()) {
         processNextEvent();
         // add arrivals
-        if ((PQ.totalEvents > 0) && PQ.heapSize <= availableServers+1) {
+        if ((PQ.totalEvents > 0) && PQ.heapSize <= totalServers+1) {
             PQ.InsertCustomers();
         }
     }
    std::cout << "Total time: " << timeOfLastDeparture;
-   std::cout << "Events: " << totalSimTime;
+   std::cout << "\nEvents: " << totalSimTime;
+   std::cout << "\nEvents2: " << PQ.eventsCreated;
 }
 
 void EventSimulator::processStatistics(Customer processCustomer) {
@@ -70,15 +71,15 @@ void EventSimulator::processNextEvent() {
              // add back to add to fifo
             currCustomer.isDeparture = true;
             FIFO.Enqueue(PQ.PercolateUp(currCustomer));// not working, PQ next customer only enqueues the head, must enqueue currcustomer
+            std::cout << "FUFO\n";
         } 
-    } else { // processing a departure event 
+    } else { // processing a departure event
         availableServers++;
-        // currCustomer = PQ.DeleteMin();
         totalSimTime++;
         processStatistics(currCustomer); 
         if(!FIFO.IsEmpty()) {
         FIFO.Dequeue();//remove Customer from FIFO 
-        // currCustomer = PQ.DeleteMin();
+        currCustomer = PQ.DeleteMin();
         currCustomer.startOfServiceTime = timeOfLastDeparture;
         currCustomer.departureTime = currCustomer.startOfServiceTime + PQ.GetNextRandomInterval(mu);
         timeOfLastDeparture = currCustomer.departureTime; // noting time departure

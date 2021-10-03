@@ -17,7 +17,7 @@ float Heap::GetNextRandomInterval(int avg) {
     randFloat = float(rand()) / (float(RAND_MAX) + 1.0);
     
     //Compute intervalTime as -1 * (1.0/avg) * ln(f) // natural logarithm of f
-    intervalTime = -1 * (1.0/lambda) * log(randFloat);
+    intervalTime = -1 * (1.0/avg) * log(randFloat);
     return intervalTime;
 }
 /*
@@ -85,6 +85,7 @@ void Heap::InsertCustomers() {
 
     while (heapSize < 200 && totalEvents != 0) {
         totalEvents--;
+        eventsCreated++;
         currentTime += GetNextRandomInterval(lambda);
         events[heapSize].arrivalTime = currentTime;
         // increases heapsize
@@ -95,6 +96,7 @@ void Heap::InsertCustomers() {
 void Heap::ConstructHeap(int initialSize) {
     // 1- 10
     totalEvents -= 200;
+    eventsCreated += 200;
     this->heapSize = initialSize;
     // 1-200
     for (int i = 1; i <= heapSize; i++) {
