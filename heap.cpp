@@ -28,7 +28,7 @@ void Heap::PercolateUp(Customer newCustomer) {
     events[0] = newCustomer;
 
     // increase heapsize and index at end of heap / new node
-    int i = heapSize++;
+    int i = ++heapSize;
     // while arrival time is less than the parent
     while (newCustomer.GetEventTime() < events[i/2].GetEventTime()) {
         // switch
@@ -43,7 +43,9 @@ void Heap::PercolateUp(Customer newCustomer) {
 // delete elements
 void Heap::DeleteMin() {
     // replace top with last elemnt
-    events[1] = events[heapSize--];
+    events[1] = events[--heapSize];
+    // set last node
+    events[heapSize+1] = Customer();
     PercolateDown(1);
 }
 
@@ -52,11 +54,14 @@ void Heap::PercolateDown(int i) {
     Customer temp = events[i];
 
     // while left child < size
+    // start at bottom
     while ((i*2) <= heapSize) {
         child = i*2;
         // if child is not at the end and right child is less than left
-        if (child != heapSize && events[child+1].GetEventTime() < events[child].GetEventTime()) {
-            child++;
+        if (child != heapSize && (events[child+1].GetEventTime() < events[child].GetEventTime())) {
+            if (events[child].arrivalTime != 0){
+                child++;
+            }
         }
         if (events[child].GetEventTime() < temp.GetEventTime()){
             events[i] = events[child];
@@ -69,11 +74,36 @@ void Heap::PercolateDown(int i) {
     events[i] = temp;
 }
 
+void Heap::InsertCustomers() {
+
+    while (heapSize < 200 && totalEvents != 0) {
+        totalEvents--;
+        //currentTime += GetNextRandomInterval(lambda);
+        events[heapSize].arrivalTime = currentTime;
+        // increases heapsize
+        PercolateUp(events[heapSize]);
+    }
+}
+
 void Heap::ConstructHeap(int initialSize) {
     // 1- 10
-    this->heapSize = initialSize+1;
+    totalEvents -= 200;
+    this->heapSize = initialSize;
+    // 1-200
     for (int i = 1; i <= heapSize; i++) {
-        currentTime += GetNextRandomInterval(lambda);
-        events[i].arrivalTime = currentTime;
+        //currentTime += i;//GetNextRandomInterval(lambda);
+        events[i].arrivalTime = i;
+    }
+}
+
+Customer* Heap::NextCustomer() {
+    return &events[1];
+}
+
+bool Heap::IsEmpty() {
+    if (heapSize == 0) {
+        return true;
+    } else {
+        return false;
     }
 }
