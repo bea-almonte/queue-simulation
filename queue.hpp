@@ -14,7 +14,7 @@ class Queue {
         ~Queue();
         void Enqueue(Customer* waitingCustomer); // insert customer at end
         Customer* Dequeue(); // returns customer at front
-        void IsEmpty();
+        bool IsEmpty();
 };
 
 #endif

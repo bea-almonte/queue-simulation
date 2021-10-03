@@ -42,3 +42,11 @@ Customer* Queue::Dequeue() {
 
     return serviceCust;
 } // returns customer at front
+
+bool Queue::IsEmpty() {
+    if (end == nullptr) {
+        return true;
+    } else {
+        return false;
+    }
+}

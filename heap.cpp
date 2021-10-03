@@ -3,6 +3,9 @@
 Heap::Heap() {
     heapSize = 0;
     currentTime = 0;
+    mu = 3;
+    lambda = 2;
+    totalEvents = 600;
 }
 
 
@@ -41,12 +44,15 @@ void Heap::PercolateUp(Customer newCustomer) {
 }
 
 // delete elements
-void Heap::DeleteMin() {
+Customer Heap::DeleteMin() {
     // replace top with last elemnt
+    events[0] = events[1];
     events[1] = events[--heapSize];
     // set last node
     events[heapSize+1] = Customer();
     PercolateDown(1);
+
+    return events[0];
 }
 
 void Heap::PercolateDown(int i) {
