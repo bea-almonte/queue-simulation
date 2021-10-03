@@ -31,7 +31,7 @@ void Heap::PercolateUp(Customer newCustomer) {
     int i = ++heapSize;
     // while arrival time is less than the parent
     while (newCustomer.GetEventTime() < events[i/2].GetEventTime()) {
-        // switch
+        // create hole
         events[i] = events[i/2];
 
         i /= 2;
@@ -91,8 +91,8 @@ void Heap::ConstructHeap(int initialSize) {
     this->heapSize = initialSize;
     // 1-200
     for (int i = 1; i <= heapSize; i++) {
-        //currentTime += i;//GetNextRandomInterval(lambda);
-        events[i].arrivalTime = i;
+        currentTime += GetNextRandomInterval(lambda);
+        events[i].arrivalTime = currentTime;
     }
 }
 
