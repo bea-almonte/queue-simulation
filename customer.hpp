@@ -7,6 +7,7 @@ class Customer {
     public:
         Customer();
         Customer(float arrivalTime);
+        Customer& operator=(const Customer& newCustomer);
         Customer* nextCust; 
         float arrivalTime;
         float departureTime;

@@ -14,6 +14,16 @@ Customer::Customer(float arrivalTime) {
     nextCust = nullptr;
 }
 
+Customer& Customer::operator=(const Customer& newCustomer) {
+    if (this != &newCustomer) {
+        this->arrivalTime = newCustomer.arrivalTime;
+        this->departureTime = newCustomer.departureTime;
+        this->startOfServiceTime = newCustomer.startOfServiceTime;
+        this->nextCust = newCustomer.nextCust;
+    }
+    return *this;
+}
+
 float Customer::GetEventTime() {
 
     if (departureTime == -1) {
