@@ -22,7 +22,7 @@ class EventSimulator {
         float idleTime; //timeoflastdeparture + nextarrivaltime
         float timeOfLastDeparture;
         float nextArrivalTime;
-        float totalSimTime;
+        int totalSimTime; // change later
         // functions
         EventSimulator();
         EventSimulator(int mu, int lambda, int totalEvents, int totalServers);

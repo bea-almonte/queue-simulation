@@ -5,7 +5,7 @@ Heap::Heap() {
     currentTime = 0;
     mu = 3;
     lambda = 2;
-    totalEvents = 600;
+    totalEvents = 5000;
 }
 
 
@@ -25,7 +25,7 @@ left child = i *2
 right child = i * 2 + 1
 parent = i / 2
 */
-void Heap::PercolateUp(Customer newCustomer) {
+Customer* Heap::PercolateUp(Customer newCustomer) {
     // place item at top of heap
     // move items down until place to insert is found
     events[0] = newCustomer;
@@ -39,8 +39,8 @@ void Heap::PercolateUp(Customer newCustomer) {
 
         i /= 2;
     }
-
     events[i] = newCustomer;
+    return &events[i];
 }
 
 // delete elements
@@ -83,9 +83,9 @@ void Heap::PercolateDown(int i) {
 
 void Heap::InsertCustomers() {
 
-    while (heapSize < 20 && totalEvents != 0) {
+    while (heapSize < 200 && totalEvents != 0) {
         totalEvents--;
-        //currentTime += GetNextRandomInterval(lambda);
+        currentTime += GetNextRandomInterval(lambda);
         events[heapSize].arrivalTime = currentTime;
         // increases heapsize
         PercolateUp(events[heapSize]);
