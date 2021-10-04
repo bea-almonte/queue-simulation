@@ -41,6 +41,7 @@ Customer* Heap::PercolateUp(Customer newCustomer) {
     // increase heapsize and index at end of heap / new node
     int i = ++heapSize;
     // while arrival time is less than the parent
+    // since equal, reassigns same to heapsize +1
     while (newCustomer.GetEventTime() < events[i/2].GetEventTime()) {
         // create hole
         events[i] = events[i/2];
@@ -95,7 +96,11 @@ void Heap::InsertCustomers() {
         totalEvents--;
         eventsCreated++;
         currentTime += GetNextRandomInterval(lambda);
-        events[heapSize].arrivalTime = currentTime;
+        while (events[heapSize].isDeparture) {
+            totalEvents--;
+            heapSize++;
+        }
+        events[heapSize].arrivalTime = currentTime; // this is messing up
         // increases heapsize
         PercolateUp(events[heapSize]);
     }

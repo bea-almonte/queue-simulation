@@ -12,8 +12,8 @@ class Queue {
     public:
         Queue(); // set front and end to null
         ~Queue();
-        void Enqueue(Customer* waitingCustomer); // insert customer at end
-        Customer* Dequeue(); // returns customer at front
+        void Enqueue(Customer waitingCustomer); // insert customer at end
+        Customer Dequeue(); // returns customer at front
         bool IsEmpty();
 };
 

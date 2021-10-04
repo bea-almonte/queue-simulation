@@ -31,6 +31,7 @@ class EventSimulator {
         void processEvents();
         void processStatistics(Customer processCustomer);
         void processNextEvent();
+//        void analyticalModel();
 };
 
 #endif

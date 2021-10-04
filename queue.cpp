@@ -1,4 +1,5 @@
 #include "queue.hpp"
+// create allocate customers
 
 Queue::Queue() {
     front = nullptr;
@@ -10,36 +11,39 @@ Queue::~Queue() {
 }
 
 //
-void Queue::Enqueue(Customer* waitingCustomer) {
+void Queue::Enqueue(Customer waitingCustomer) {
     // add customer to front if there aren't
     // others,otherwise add to end
+    Customer *n = new Customer(waitingCustomer.arrivalTime);
+
     if (end == nullptr) {
-        front = waitingCustomer;
-        end = waitingCustomer;
+        front = n;
+        end = n;
     } else {
         // update pointer for current end
-        end->nextCust = waitingCustomer;
+        end->nextCust = n;
         // end is now waitcustomer
-        end = waitingCustomer;
+        end = n;
     }
 }
 
 // service customer
 // return pointer to serviced customer
-Customer* Queue::Dequeue() {
-    // temp pointer to return
-    Customer *serviceCust;
+Customer Queue::Dequeue() {
+    // temp object to return
+    Customer serviceCust;
 
     // set front to be serviced
-    serviceCust = front;
-    // 
+    serviceCust = *front;
+    // set front to next customer in line
+    delete front;
     front = front->nextCust;
 
     // sets end to empty if queue is empty
     if (front == nullptr) {
         end = nullptr;
     }
-
+    
     return serviceCust;
 } // returns customer at front
 
