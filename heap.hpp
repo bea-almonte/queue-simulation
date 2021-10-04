@@ -11,9 +11,9 @@ class Heap {
         float currentTime; // keep track of ticks
         int mu = 3;
         int lambda = 2;
-        
     public:
         Heap();
+        Heap(int lambda, int mu, int totalEvents);
         bool IsEmpty();
         int eventsCreated = 0;
         Customer* NextCustomer(); // done

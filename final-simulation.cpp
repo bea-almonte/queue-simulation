@@ -6,9 +6,8 @@
 #include "heap.hpp"
 #include "eventsimulator.hpp"
 int main() {
-    EventSimulator event1;
+    EventSimulator event1(2,3,2,10);
     srand(time(NULL));
-    float testnum = 1.5;
     event1.processEvents();
     
     return 0;

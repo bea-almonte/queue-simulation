@@ -5,9 +5,17 @@ Heap::Heap() {
     currentTime = 0;
     mu = 3;
     lambda = 2;
-    totalEvents = 5000;
+    totalEvents = 100;
 }
 
+Heap::Heap(int lambda, int mu, int totalEvents) {
+    heapSize = 0;
+    currentTime = 0;
+    
+    this->mu = mu;
+    this-> lambda = lambda;
+    this->totalEvents = totalEvents;
+}
 
 float Heap::GetNextRandomInterval(int avg) {
     //Generate a random float f on the interval (0..1]
@@ -83,7 +91,7 @@ void Heap::PercolateDown(int i) {
 
 void Heap::InsertCustomers() {
 
-    while (heapSize < 200 && totalEvents != 0) {
+    while (totalEvents != 0 && heapSize < 200) {
         totalEvents--;
         eventsCreated++;
         currentTime += GetNextRandomInterval(lambda);
@@ -95,8 +103,8 @@ void Heap::InsertCustomers() {
 
 void Heap::ConstructHeap(int initialSize) {
     // 1- 10
-    totalEvents -= 200;
-    eventsCreated += 200;
+    totalEvents -= initialSize;
+    eventsCreated += initialSize;
     this->heapSize = initialSize;
     // 1-200
     for (int i = 1; i <= heapSize; i++) {
