@@ -47,17 +47,20 @@ void EventSimulator::processEvents() {
             PQ.InsertCustomers();
         }
     }
-   std::cout << "\nTotal time: " << timeOfLastDeparture;
-   std::cout << "\nTotal Wait Time: " << totalWaitTime;
-   std::cout << "\nCustomer Waited: " << customerWaitedCnt;
-   std::cout << "\nIdle Time: " << idleTime/timeOfLastDeparture;
-   std::cout << "\nTotal Service Time: " << totalCounted;
+    std::cout << "\nTime of last departure: "  << timeOfLastDeparture;
+    std::cout << "\nPo : " << idleTime / timeOfLastDeparture;
+    std::cout << "\nW : " << (totalWaitTime + serviceTime)/ totalEvents;
+    std::cout << "\nWq : " << totalWaitTime / totalEvents;
+    std::cout << "\nRho: " << (totalServers * totalSimTime) / serviceTime;
+    std::cout << "\nwaited for service: " << customerWaitedCnt ;
+    // std::cout << "\nsim | service " << totalSimTime << " | " << serviceTime;
+    std::cout << std::endl;
 }
 
 void EventSimulator::processStatistics(Customer processCustomer) {
     currentWaitTime = processCustomer.startOfServiceTime - processCustomer.arrivalTime;
     
-    if(currentWaitTime > 0.00) {
+    if(currentWaitTime > 0.0) {
         customerWaitedCnt++;
         totalWaitTime += currentWaitTime;
 
@@ -66,21 +69,21 @@ void EventSimulator::processStatistics(Customer processCustomer) {
     totalSimTime += (processCustomer.departureTime - processCustomer.arrivalTime);
     serviceTime += (processCustomer.departureTime - processCustomer.startOfServiceTime);
     if(availableServers == totalServers) {
-        idleTime += (timeOfLastDeparture - processCustomer.arrivalTime);
+        idleTime += processCustomer.departureTime - PQ.NextCustomer()->arrivalTime;
     } 
 }
 
 void EventSimulator::processNextEvent() {
     Customer currCustomer;
+    float startofService = 0;
     //std::cout << "test\n";
     currCustomer = PQ.DeleteMin(); // take out of PQ
     if(currCustomer.isDeparture == false) {
-        totalCounted++;
+       
         if(availableServers > 0) {
             availableServers--;
             currCustomer.startOfServiceTime = currCustomer.arrivalTime; 
             currCustomer.departureTime = currCustomer.arrivalTime + PQ.GetNextRandomInterval(mu);
-            timeOfLastDeparture = currCustomer.departureTime; // noting time departure
             currCustomer.isDeparture = true;
             PQ.PercolateUp(currCustomer);  //place departureEvent in PQ 
         } else {
@@ -88,14 +91,13 @@ void EventSimulator::processNextEvent() {
         } 
     } else { // processing a departure event
         availableServers++;
+        timeOfLastDeparture = currCustomer.departureTime; 
         processStatistics(currCustomer); 
-
         if(!FIFO.IsEmpty()) {
             //remove Customer from FIFO 
             currCustomer = FIFO.Dequeue();
             currCustomer.startOfServiceTime = timeOfLastDeparture;
             currCustomer.departureTime = currCustomer.startOfServiceTime + PQ.GetNextRandomInterval(mu);
-            timeOfLastDeparture = currCustomer.departureTime; // noting time departure
             currCustomer.isDeparture = true;
             PQ.PercolateUp(currCustomer);
             availableServers--;
@@ -152,6 +154,7 @@ void EventSimulator::analyticalModel() {
     std::cout << "\nW = " << W;
     std::cout << "\nLq = " << Lq;
     std::cout << "\nWq = " << Wq;
+    std::cout << "\nRho = " << rho;
 }
 
 float EventSimulator::factorial(float n) {

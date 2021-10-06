@@ -10,5 +10,10 @@ int main() {
     srand(time(NULL));
     event1.processEvents();
     event1.analyticalModel();
+    std::cout << "\n========================================\n";
+
+    EventSimulator event2(5,6,4,5000);
+    event2.processEvents();
+    event2.analyticalModel();
     return 0;
 }

@@ -12,8 +12,6 @@ class Heap {
         float currentTime; // keep track of ticks
         float mu;
         float lambda;
-        int heapSize;
-        int totalEvents = 5000;
     public:
         Heap();
         Heap(float lambda, float mu, int totalEvents);
@@ -27,6 +25,8 @@ class Heap {
         float GetNextRandomInterval(int avg);
         bool IsEmpty();
 
+        int heapSize;
+        int totalEvents = 5000;
 };
 
 
