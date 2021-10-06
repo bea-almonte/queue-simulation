@@ -6,6 +6,7 @@ EventSimulator::EventSimulator() {
     totalEvents = 5000;
     totalServers = 2;
     availableServers = totalServers;
+    // stats
     customerWaitedCnt = 0;
     totalWaitTime = 0;
     serviceTime = 0;
@@ -14,6 +15,7 @@ EventSimulator::EventSimulator() {
     nextArrivalTime = 0;
     totalSimTime = 0;
     currentWaitTime = 0;
+    
     PQ = Heap(lambda, mu, totalEvents);
 }
 
@@ -33,6 +35,7 @@ EventSimulator::EventSimulator(float lambda, float mu, int totalServers, int tot
     totalSimTime = 0;
     currentWaitTime = 0; 
     totalCounted = 0;
+
     PQ = Heap(lambda, mu, totalEvents);
 }
 
@@ -51,9 +54,8 @@ void EventSimulator::processEvents() {
     std::cout << "\nPo : " << idleTime / timeOfLastDeparture;
     std::cout << "\nW : " << (totalWaitTime + serviceTime)/ totalEvents;
     std::cout << "\nWq : " << totalWaitTime / totalEvents;
-    std::cout << "\nRho: " << (totalServers * totalSimTime) / serviceTime;
+    std::cout << "\nRho: " << (serviceTime) / (totalServers * timeOfLastDeparture);
     std::cout << "\nwaited for service: " << customerWaitedCnt ;
-    // std::cout << "\nsim | service " << totalSimTime << " | " << serviceTime;
     std::cout << std::endl;
 }
 
@@ -66,8 +68,8 @@ void EventSimulator::processStatistics(Customer processCustomer) {
 
     }
 
-    totalSimTime += (processCustomer.departureTime - processCustomer.arrivalTime);
     serviceTime += (processCustomer.departureTime - processCustomer.startOfServiceTime);
+
     if(availableServers == totalServers) {
         idleTime += processCustomer.departureTime - PQ.NextCustomer()->arrivalTime;
     } 
@@ -76,7 +78,7 @@ void EventSimulator::processStatistics(Customer processCustomer) {
 void EventSimulator::processNextEvent() {
     Customer currCustomer;
     float startofService = 0;
-    //std::cout << "test\n";
+
     currCustomer = PQ.DeleteMin(); // take out of PQ
     if(currCustomer.isDeparture == false) {
        
@@ -87,7 +89,7 @@ void EventSimulator::processNextEvent() {
             currCustomer.isDeparture = true;
             PQ.PercolateUp(currCustomer);  //place departureEvent in PQ 
         } else {
-            FIFO.Enqueue(currCustomer); // remove customer from pq
+            FIFO.Enqueue(currCustomer); // add customer to fifo
         } 
     } else { // processing a departure event
         availableServers++;
@@ -146,13 +148,13 @@ void EventSimulator::analyticalModel() {
     Wq = Lq / lambda;
 
     // CALCULATING UTILIZATION FACTOR
-    rho = avgRatio * M;
+    rho = avgRatio / M;
 
     // OUTPUT MODEL
     std::cout << "\nPo = " << Po;
-    std::cout << "\nL = " << L;
+    //std::cout << "\nL = " << L;
     std::cout << "\nW = " << W;
-    std::cout << "\nLq = " << Lq;
+    //std::cout << "\nLq = " << Lq;
     std::cout << "\nWq = " << Wq;
     std::cout << "\nRho = " << rho;
 }

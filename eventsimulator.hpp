@@ -9,8 +9,6 @@
 
 class EventSimulator {
     private: 
-        float factorial(float n);
-    public:
         Heap PQ; // priority queue
         Queue FIFO; // Fifo for waiting customers
         float mu;
@@ -28,6 +26,10 @@ class EventSimulator {
         float nextArrivalTime;
         float totalSimTime;
         float currentWaitTime;
+
+        float factorial(float n);
+    public:
+
         // functions
         EventSimulator();
         EventSimulator(float lambda, float mu, int totalServers, int totalEvents);
