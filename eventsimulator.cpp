@@ -55,7 +55,7 @@ void EventSimulator::processEvents() {
     std::cout << "\nW : " << (totalWaitTime + serviceTime)/ totalEvents;
     std::cout << "\nWq : " << totalWaitTime / totalEvents;
     std::cout << "\nRho: " << (serviceTime) / (totalServers * timeOfLastDeparture);
-    std::cout << "\nwaited for service: " << customerWaitedCnt ;
+    std::cout << "\nwaited for service: " << customerWaitedCnt / static_cast<float>(totalEvents);
     std::cout << std::endl;
 }
 
@@ -77,7 +77,6 @@ void EventSimulator::processStatistics(Customer processCustomer) {
 
 void EventSimulator::processNextEvent() {
     Customer currCustomer;
-    float startofService = 0;
 
     currCustomer = PQ.DeleteMin(); // take out of PQ
     if(currCustomer.isDeparture == false) {
