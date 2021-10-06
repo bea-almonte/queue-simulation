@@ -2,16 +2,19 @@
 #include "queue.hpp"
 #include "customer.hpp"
 #include <iostream>
+#include <math.h>
 
 #ifndef EVENTSIMULATOR_HPP
 #define EVENTSIMULATOR_HPP
 
 class EventSimulator {
+    private: 
+        float factorial(float n);
     public:
         Heap PQ; // priority queue
         Queue FIFO; // Fifo for waiting customers
-        int mu;
-        int lambda;
+        float mu;
+        float lambda;
         int totalEvents;
         int totalServers;
         int availableServers;
@@ -27,11 +30,11 @@ class EventSimulator {
         float currentWaitTime;
         // functions
         EventSimulator();
-        EventSimulator(int lambda, int mu, int totalServers, int totalEvents);
+        EventSimulator(float lambda, float mu, int totalServers, int totalEvents);
         void processEvents();
         void processStatistics(Customer processCustomer);
         void processNextEvent();
-//        void analyticalModel();
+        void analyticalModel();
 };
 
 #endif

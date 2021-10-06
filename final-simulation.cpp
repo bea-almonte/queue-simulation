@@ -9,6 +9,6 @@ int main() {
     EventSimulator event1(2,3,2,5000);
     srand(time(NULL));
     event1.processEvents();
-    
+    event1.analyticalModel();
     return 0;
 }

@@ -3,12 +3,13 @@
 Heap::Heap() {
     heapSize = 0;
     currentTime = 0;
+
     mu = 3;
     lambda = 2;
     totalEvents = 100;
 }
 
-Heap::Heap(int lambda, int mu, int totalEvents) {
+Heap::Heap(float lambda, float mu, int totalEvents) {
     heapSize = 0;
     currentTime = 0;
     
@@ -25,7 +26,7 @@ float Heap::GetNextRandomInterval(int avg) {
     randFloat = float(rand()) / (float(RAND_MAX) + 1.0);
     
     //Compute intervalTime as -1 * (1.0/avg) * ln(f) // natural logarithm of f
-    intervalTime = -1 * (1.0/avg) * log(randFloat);
+    intervalTime = -1.0 * (1.0/avg) * log(randFloat);
     return intervalTime;
 }
 /*
@@ -94,24 +95,23 @@ void Heap::InsertCustomers() {
 
     while (totalEvents != 0 && heapSize < 200) {
         totalEvents--;
-        eventsCreated++;
         currentTime += GetNextRandomInterval(lambda);
+        // accounts for departures left in PQ
         while (events[heapSize].isDeparture) {
             totalEvents--;
             heapSize++;
         }
-        events[heapSize].arrivalTime = currentTime; // this is messing up
+        events[heapSize].arrivalTime = currentTime;
         // increases heapsize
         PercolateUp(events[heapSize]);
     }
 }
 
 void Heap::ConstructHeap(int initialSize) {
-    // 1- 10
     totalEvents -= initialSize;
-    eventsCreated += initialSize;
+
     this->heapSize = initialSize;
-    // 1-200
+
     for (int i = 1; i <= heapSize; i++) {
         currentTime += GetNextRandomInterval(lambda);
         events[i].arrivalTime = currentTime;

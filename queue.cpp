@@ -32,11 +32,12 @@ void Queue::Enqueue(Customer waitingCustomer) {
 Customer Queue::Dequeue() {
     // temp object to return
     Customer serviceCust;
-
+    Customer *toBeDeleted;
     // set front to be serviced
     serviceCust = *front;
+    toBeDeleted = front;
+
     // set front to next customer in line
-    delete front;
     front = front->nextCust;
 
     // sets end to empty if queue is empty
@@ -44,6 +45,7 @@ Customer Queue::Dequeue() {
         end = nullptr;
     }
     
+    delete toBeDeleted;
     return serviceCust;
 } // returns customer at front
 

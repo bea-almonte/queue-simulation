@@ -8,24 +8,25 @@
 
 class Heap {
     private:
-        float currentTime; // keep track of ticks
-        int mu = 3;
-        int lambda = 2;
-    public:
-        Heap();
-        Heap(int lambda, int mu, int totalEvents);
-        bool IsEmpty();
-        int eventsCreated = 0;
-        Customer* NextCustomer(); // done
-        void InsertCustomers(); // done
-        void ConstructHeap(int initialSize); // first arrivals
-        void PercolateDown(int i); // done
-        Customer* PercolateUp(Customer newCustomer); // done
         Customer events[201];
-        float GetNextRandomInterval(int avg); // done
-        Customer DeleteMin(); // working
+        float currentTime; // keep track of ticks
+        float mu;
+        float lambda;
         int heapSize;
         int totalEvents = 5000;
+    public:
+        Heap();
+        Heap(float lambda, float mu, int totalEvents);
+        // heap functions
+        void ConstructHeap(int initialSize); // first arrivals -- sets heap size
+        void InsertCustomers(); // inserts customers until heap is full
+        void PercolateDown(int i);
+        Customer* PercolateUp(Customer newCustomer);
+        Customer DeleteMin(); // working
+        Customer* NextCustomer(); // done
+        float GetNextRandomInterval(int avg);
+        bool IsEmpty();
+
 };
 
 
