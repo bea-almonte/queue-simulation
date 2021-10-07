@@ -40,7 +40,6 @@ EventSimulator::EventSimulator(float lambda, float mu, int totalServers, int tot
 }
 
 void EventSimulator::processEvents() {
-    std::cout << "Total Events: " << totalEvents;
 
     PQ.ConstructHeap(200);
     while (!PQ.IsEmpty()) {
@@ -170,7 +169,7 @@ void EventSimulator::simulationStatistics() {
     simW = (totalWaitTime + serviceTime)/ totalEvents; // avg time a customer is in the system
     simWq = totalWaitTime / static_cast<float>(totalEvents); // avg time waiting in queue
     simRho = (serviceTime) / (totalServers * timeOfLastDeparture); // utilization factor
-    std::cout << "\nWaited for service: " <<(customerWaitedCnt / static_cast<float>(totalEvents));
+    std::cout << std::setprecision(5) << "\nWaited for service: " << (customerWaitedCnt / static_cast<float>(totalEvents));
 }
 
 // print row of stats and percent error
@@ -184,7 +183,7 @@ void EventSimulator::printFormattedStats(float theoretical, float experimental, 
 
 // print only analytical model
 void EventSimulator::printFormattedStats(float theoretical, std::string label) {
-    std::string empty = "-------";
+    std::string empty = "--------";
     std::cout << std::endl;
     std::cout << std::fixed << std::setw(5) << std::left << label << std::setprecision(5)
     << std::setw(12) << theoretical
