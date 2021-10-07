@@ -22,7 +22,7 @@ class EventSimulator {
         int customerWaitedCnt;
         float totalWaitTime;
         float serviceTime;
-        float idleTime; //timeoflastdeparture + nextarrivaltime
+        float idleTime; // timeoflastdeparture - nextarrivaltime
         float timeOfLastDeparture;
         float nextArrivalTime;
         float totalSimTime;
