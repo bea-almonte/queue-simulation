@@ -65,7 +65,10 @@ void EventSimulator::processStatistics(Customer processCustomer) {
     serviceTime += (processCustomer.departureTime - processCustomer.startOfServiceTime);
 
     if(availableServers == totalServers) {
-        idleTime += processCustomer.departureTime - PQ.NextCustomer()->arrivalTime;
+        if (PQ.NextCustomer()->arrivalTime != 0) { 
+            idleTime += PQ.NextCustomer()->arrivalTime - processCustomer.departureTime;
+        }
+        
     } 
 }
 
