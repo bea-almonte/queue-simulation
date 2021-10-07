@@ -179,6 +179,7 @@ void EventSimulator::simulationStatistics() {
     std::cout << "\nWaited for service: " <<(customerWaitedCnt / static_cast<float>(totalEvents));
 }
 
+// print row of stats and percent error
 void EventSimulator::printFormattedStats(float theoretical, float experimental, std::string label) {
     std::cout << std::endl;
     std::cout << std::fixed << std::setw(5) << std::left << label << std::setprecision(5)
@@ -187,6 +188,7 @@ void EventSimulator::printFormattedStats(float theoretical, float experimental, 
     << std::setw(12) << calcPercentError(theoretical, experimental) << std::endl;
 }
 
+// return percent error of values
 float EventSimulator::calcPercentError(float theoretical, float experimental) {
     float percentError;
     float PERCENT = 100.0;
@@ -196,6 +198,7 @@ float EventSimulator::calcPercentError(float theoretical, float experimental) {
     return percentError;
 }
 
+// get factorial of a number
 float EventSimulator::factorial(float n) {
     return (n==1 || n == 0) ? 1 : factorial(n-1) * n;
 }
