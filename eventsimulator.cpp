@@ -34,7 +34,6 @@ EventSimulator::EventSimulator(float lambda, float mu, int totalServers, int tot
     nextArrivalTime = 0;
     totalSimTime = 0;
     currentWaitTime = 0; 
-    totalCounted = 0;
 
     PQ = Heap(lambda, mu, totalEvents);
 }

@@ -20,7 +20,7 @@ class Heap {
         // heap functions
         void ConstructHeap(int initialSize); // first arrivals -- sets heap size
         void InsertCustomers(); // inserts customers until heap is full
-        void PercolateDown(int i);
+        void PercolateDown(int i); // hole
         Customer* PercolateUp(Customer newCustomer);
         Customer DeleteMin(); // returns top and removes customer from PQ
         Customer* NextCustomer(); // returns top
