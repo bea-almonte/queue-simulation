@@ -20,7 +20,6 @@ class EventSimulator {
         int availableServers;
         // stats
         int customerWaitedCnt;
-        int totalCounted;
         float totalWaitTime;
         float serviceTime;
         float idleTime; //timeoflastdeparture + nextarrivaltime
