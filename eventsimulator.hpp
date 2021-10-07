@@ -28,7 +28,7 @@ class EventSimulator {
         float nextArrivalTime;
         float totalSimTime;
         float currentWaitTime;
-        // stat finals
+        // simulation stat calculations
         float simPo;
         float simW;
         float simWq;
