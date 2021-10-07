@@ -8,7 +8,7 @@ OBJECTS = customer.o queue.o heap.o eventsimulator.o
 final-simulation: final-simulation.o $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
-memory: 
+memory-check: 
 	valgrind ./final-simulation
 
 clean:
