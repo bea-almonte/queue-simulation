@@ -1,10 +1,10 @@
 #include "eventsimulator.hpp"
 
 EventSimulator::EventSimulator() {
-    mu = 3;
     lambda = 2;
-    totalEvents = 5000;
+    mu = 3;
     totalServers = 2;
+    totalEvents = 5000;
     availableServers = totalServers;
     // stats
     customerWaitedCnt = 0;
@@ -20,8 +20,8 @@ EventSimulator::EventSimulator() {
 }
 
 EventSimulator::EventSimulator(float lambda, float mu, int totalServers, int totalEvents) {
-    this->mu = mu;
     this->lambda = lambda;
+    this->mu = mu;
     this->totalEvents = totalEvents;
     this->totalServers = totalServers;
     availableServers = totalServers;
@@ -50,18 +50,15 @@ void EventSimulator::processEvents() {
             PQ.InsertCustomers();
         }
     }
-    std::cout << "\nTime of last departure: "  << timeOfLastDeparture;
-    std::cout << "\nPo : " << idleTime / timeOfLastDeparture;
-    std::cout << "\nW : " << (totalWaitTime + serviceTime)/ totalEvents;
-    std::cout << "\nWq : " << totalWaitTime / totalEvents;
-    std::cout << "\nRho: " << (serviceTime) / (totalServers * timeOfLastDeparture);
-    std::cout << "\nwaited for service: " << customerWaitedCnt / static_cast<float>(totalEvents);
+    simulationStatistics();
     std::cout << std::endl;
 }
 
 void EventSimulator::processStatistics(Customer processCustomer) {
     currentWaitTime = processCustomer.startOfServiceTime - processCustomer.arrivalTime;
-    
+    if (currentWaitTime < 0.0 ) { 
+        std::cout << " wot\n";
+    }
     if(currentWaitTime > 0.0) {
         customerWaitedCnt++;
         totalWaitTime += currentWaitTime;
@@ -80,7 +77,7 @@ void EventSimulator::processNextEvent() {
 
     currCustomer = PQ.DeleteMin(); // take out of PQ
     if(currCustomer.isDeparture == false) {
-       
+        // process arrivalss
         if(availableServers > 0) {
             availableServers--;
             currCustomer.startOfServiceTime = currCustomer.arrivalTime; 
@@ -107,12 +104,12 @@ void EventSimulator::processNextEvent() {
 }
 
 void EventSimulator::analyticalModel() {
-    float Po = 0; // percent idle time = idletime/totaltime
+    float Po = 0; // percent idle time = idletime/totaltime *
     float L = 0; // avg num of people in system (numberinline +numberbeing served)
-    float W = 0; // avg time a customer spends in the system, spent in line plus getting service
+    float W = 0; // avg time a customer spends in the system, spent in line plus getting service *
     float Lq = 0; // avg number of customers in the queue;
-    float Wq = 0; // avg time a customer spends waiting in the queue;
-    float rho = 0; // utilization factor for system, proportion of system's resources ??
+    float Wq = 0; // avg time a customer spends waiting in the queue; *
+    float rho = 0; // utilization factor for system *
 
     float M = totalServers;
     float avgRatio = 0; // ratio of lambda/mu
@@ -149,13 +146,54 @@ void EventSimulator::analyticalModel() {
     // CALCULATING UTILIZATION FACTOR
     rho = avgRatio / M;
 
+    std::cout << std::endl << std::endl;
+
+    // output labels
+    std::cout << std::setw(5) << " " << std::left
+    << std::setw(12) << "Analytical" 
+    << std::setw(12) << "Simulated" 
+    << std::setw(12) << "% Error" 
+    << std::endl;
+    // output each compared values
+    printFormattedStats(Po, simPo, "Po");
+    printFormattedStats(W, simW, "W");
+    printFormattedStats(Wq, simWq, "Wq");
+    printFormattedStats(rho, simRho, "Rho");
+
     // OUTPUT MODEL
+    std::cout << "\nTotal Analytical Model Results";
     std::cout << "\nPo = " << Po;
-    //std::cout << "\nL = " << L;
+    std::cout << "\nL = " << L;
     std::cout << "\nW = " << W;
-    //std::cout << "\nLq = " << Lq;
+    std::cout << "\nLq = " << Lq;
     std::cout << "\nWq = " << Wq;
     std::cout << "\nRho = " << rho;
+    std::cout << std::endl;
+}
+
+void EventSimulator::simulationStatistics() {
+    simPo = idleTime / timeOfLastDeparture; // percent idle time
+    simW = (totalWaitTime + serviceTime)/ totalEvents; // avg time a customer is in the system
+    simWq = totalWaitTime / totalEvents; // avg time waiting in queue
+    simRho = (serviceTime) / (totalServers * timeOfLastDeparture); // utilization factor
+    std::cout << "\nWaited for service: " <<(customerWaitedCnt / static_cast<float>(totalEvents));
+}
+
+void EventSimulator::printFormattedStats(float theoretical, float experimental, std::string label) {
+    std::cout << std::endl;
+    std::cout << std::fixed << std::setw(5) << std::left << label << std::setprecision(5)
+    << std::setw(12) << theoretical 
+    << std::setw(12) << experimental 
+    << std::setw(12) << calcPercentError(theoretical, experimental) << std::endl;
+}
+
+float EventSimulator::calcPercentError(float theoretical, float experimental) {
+    float percentError;
+    float PERCENT = 100.0;
+    
+    percentError = ((experimental - theoretical) / theoretical) * PERCENT;
+
+    return percentError;
 }
 
 float EventSimulator::factorial(float n) {

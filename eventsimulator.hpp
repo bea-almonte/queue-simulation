@@ -2,7 +2,9 @@
 #include "queue.hpp"
 #include "customer.hpp"
 #include <iostream>
+#include <iomanip>
 #include <math.h>
+#include <string>
 
 #ifndef EVENTSIMULATOR_HPP
 #define EVENTSIMULATOR_HPP
@@ -26,8 +28,15 @@ class EventSimulator {
         float nextArrivalTime;
         float totalSimTime;
         float currentWaitTime;
-
+        // stat finals
+        float simPo;
+        float simW;
+        float simWq;
+        float simRho;
         float factorial(float n);
+        void simulationStatistics();
+        float calcPercentError(float theoretical, float experimental);
+        void printFormattedStats(float theoretical, float experimental, std::string label);
     public:
 
         // functions

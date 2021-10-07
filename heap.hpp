@@ -1,6 +1,8 @@
-#include <math.h>
-#include <random>
-#include <iostream>
+/* Heap is the priority queue.
+Contains events (customers) that will be sorted by their arrival/departure time
+*/
+#include <math.h> // pow()
+#include <random> // rand()
 #include "queue.hpp"
 #include "customer.hpp"
 #ifndef HEAP_HPP
@@ -20,9 +22,9 @@ class Heap {
         void InsertCustomers(); // inserts customers until heap is full
         void PercolateDown(int i);
         Customer* PercolateUp(Customer newCustomer);
-        Customer DeleteMin(); // working
-        Customer* NextCustomer(); // done
-        float GetNextRandomInterval(int avg);
+        Customer DeleteMin(); // returns top and removes customer from PQ
+        Customer* NextCustomer(); // returns top
+        float GetNextRandomInterval(int avg); // returns random interval (0,1]
         bool IsEmpty();
 
         int heapSize;

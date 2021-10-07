@@ -1,3 +1,5 @@
+// customer.cpp -- class constructors and function definitions
+// an object for a single customer
 #include "customer.hpp"
 
 Customer::Customer() {
@@ -27,6 +29,7 @@ Customer& Customer::operator=(const Customer& newCustomer) {
     return *this;
 }
 
+// returns lastest time
 float Customer::GetEventTime() {
 
     if (departureTime == -1) {
