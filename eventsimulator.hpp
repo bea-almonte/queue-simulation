@@ -38,7 +38,6 @@ class EventSimulator {
         float calcPercentError(float theoretical, float experimental);
         void printFormattedStats(float theoretical, float experimental, std::string label);
     public:
-
         // functions
         EventSimulator();
         EventSimulator(float lambda, float mu, int totalServers, int totalEvents);

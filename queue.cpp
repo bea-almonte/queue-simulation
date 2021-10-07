@@ -1,16 +1,12 @@
+// queue.cpp -- adds and removes customers from a fifo queue
 #include "queue.hpp"
-// create allocate customers
 
+// set front and end to null
 Queue::Queue() {
     front = nullptr;
     end = nullptr;
-} // set front and end to null
+} 
 
-Queue::~Queue() {
-
-}
-
-//
 void Queue::Enqueue(Customer waitingCustomer) {
     // add customer to front if there aren't
     // others,otherwise add to end

@@ -146,7 +146,7 @@ void EventSimulator::analyticalModel() {
     // CALCULATING UTILIZATION FACTOR
     rho = avgRatio / M;
 
-    std::cout << std::endl << std::endl;
+    std::cout << std::endl;
 
     // output labels
     std::cout << std::setw(5) << " " << std::left
