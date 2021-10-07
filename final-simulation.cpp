@@ -20,6 +20,7 @@ int main() {
     float events;
 
     // TEST 1
+    std::cout << "Case 1\n";
     inData.open("test1.txt");
     inData >> lambda >> mu >> M >> events;
     EventSimulator event1(lambda,mu,M,events);
@@ -32,6 +33,7 @@ int main() {
     
     // TEST 2
     inData.close();
+    std::cout << "Case 2\n";
     inData.open("test2.txt");
     inData >> lambda >> mu >> M >> events;
 
