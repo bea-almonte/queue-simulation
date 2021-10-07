@@ -156,18 +156,12 @@ void EventSimulator::analyticalModel() {
     << std::endl;
     // output each compared values
     printFormattedStats(Po, simPo, "Po");
+    printFormattedStats(L,"L");
     printFormattedStats(W, simW, "W");
+    printFormattedStats(Lq,"L");
     printFormattedStats(Wq, simWq, "Wq");
     printFormattedStats(rho, simRho, "Rho");
 
-    // OUTPUT MODEL
-    std::cout << "\nTotal Analytical Model Results";
-    std::cout << "\nPo = " << Po;
-    std::cout << "\nL = " << L;
-    std::cout << "\nW = " << W;
-    std::cout << "\nLq = " << Lq;
-    std::cout << "\nWq = " << Wq;
-    std::cout << "\nRho = " << rho;
     std::cout << std::endl;
 }
 
@@ -186,6 +180,16 @@ void EventSimulator::printFormattedStats(float theoretical, float experimental, 
     << std::setw(12) << theoretical 
     << std::setw(12) << experimental 
     << std::setw(12) << calcPercentError(theoretical, experimental) << std::endl;
+}
+
+// print only analytical model
+void EventSimulator::printFormattedStats(float theoretical, std::string label) {
+    std::string empty = "-------";
+    std::cout << std::endl;
+    std::cout << std::fixed << std::setw(5) << std::left << label << std::setprecision(5)
+    << std::setw(12) << theoretical
+    << std::setw(12) << empty
+    << std::setw(12) << empty << std::endl;
 }
 
 // return percent error of values
