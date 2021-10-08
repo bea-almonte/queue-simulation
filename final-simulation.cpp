@@ -22,7 +22,7 @@ int main() {
     float M = 0;
     float events;
 
-    srand(987986); // set rand()
+    srand(time(NULL)); // set rand()
 
     // TEST 1
     std::cout << "Case 1\n\n";
